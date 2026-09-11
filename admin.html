@@ -212,22 +212,53 @@
   </div>
 
   <script>
+    
+
+      
+      
+
+      
+    
+
+      
+  
     async function login() {
-      const password = document.getElementById("password").value;
-      const status = document.getElementById("loginStatus");
+  const password = document.getElementById("password").value;
+  const status = document.getElementById("loginStatus");
 
-      if (!password) {
-        status.style.display = "block";
-        status.textContent = "Please enter your admin password.";
-        return;
-      }
+  if (!password) {
+    status.style.display = "block";
+    status.textContent = "Please enter your admin password.";
+    return;
+  }
 
-      status.style.display = "block";
-      status.textContent = "Admin security connection will be added next.";
+  status.style.display = "block";
+  status.textContent = "Checking password...";
 
+  try {
+    const response = await fetch("/.netlify/functions/admin-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ password })
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      status.style.display = "none";
       document.getElementById("loginCard").classList.add("hidden");
       document.getElementById("adminPanel").classList.remove("hidden");
+    } else {
+      status.style.display = "block";
+      status.textContent = data.message || "Incorrect password.";
     }
+  } catch (error) {
+    status.style.display = "block";
+    status.textContent = "Login service is unavailable. Please try again.";
+  }
+}
 
     function saveProduct() {
       const name = document.getElementById("productName").value;
