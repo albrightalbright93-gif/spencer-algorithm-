@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spencer Algorithm Admin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: #cbd5e1;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 16px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #0f766e;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #115e59;
+    }
+
+    .logout {
+      background: #dc2626;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #ecfeff;
+      color: #155e75;
+      display: none;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Spencer Algorithm Admin</h1>
+    <p>Manage your online shop</p>
+  </header>
+
+  <div class="container">
+
+    <div id="loginCard" class="card">
+      <h2>Admin Login</h2>
+
+      <label for="password">Admin Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter admin password"
+      />
+
+      <button onclick="login()">Login</button>
+
+      <div id="loginStatus" class="status"></div>
+    </div>
+
+    <div id="adminPanel" class="hidden">
+
+      <div class="card">
+        <h2>Add Product</h2>
+
+        <label for="productName">Product Name</label>
+        <input
+          type="text"
+          id="productName"
+          placeholder="Example: iPhone 15 Pro"
+        />
+
+        <label for="category">Category</label>
+        <select id="category">
+          <option>Automobile</option>
+          <option>Phones & Computers</option>
+          <option>Electronics</option>
+          <option>Property</option>
+          <option>Home, Furniture & Appliances</option>
+          <option>Beauty & Personal Care</option>
+          <option>Fashion</option>
+          <option>Leisure & Activities</option>
+          <option>Seeking Work & CVs</option>
+          <option>Services</option>
+          <option>Business & Industry</option>
+          <option>Job</option>
+          <option>Babies & Kids</option>
+          <option>Pets</option>
+          <option>Food, Agriculture & Farming</option>
+          <option>Commercial Equipment & Tools</option>
+          <option>Repair & Construction</option>
+        </select>
+
+        <label for="price">Price</label>
+        <input
+          type="text"
+          id="price"
+          placeholder="Example: GH₵ 2,500"
+        />
+
+        <label for="imageUrl">Product Image URL</label>
+        <input
+          type="url"
+          id="imageUrl"
+          placeholder="Paste image link"
+        />
+
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          placeholder="Enter product description"
+        ></textarea>
+
+        <button onclick="saveProduct()">Save Product</button>
+
+        <div id="productStatus" class="status"></div>
+
+        <p class="note">
+          This admin page is ready for your secure backend connection.
+          Your password is not stored inside this public HTML file.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Admin Controls</h2>
+        <button class="logout" onclick="logout()">Logout</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    async function login() {
+      const password = document.getElementById("password").value;
+      const status = document.getElementById("loginStatus");
+
+      if (!password) {
+        status.style.display = "block";
+        status.textContent = "Please enter your admin password.";
+        return;
+      }
+
+      status.style.display = "block";
+      status.textContent = "Admin security connection will be added next.";
+
+      document.getElementById("loginCard").classList.add("hidden");
+      document.getElementById("adminPanel").classList.remove("hidden");
+    }
+
+    function saveProduct() {
+      const name = document.getElementById("productName").value;
+      const category = document.getElementById("category").value;
+      const price = document.getElementById("price").value;
+      const image = document.getElementById("imageUrl").value;
+      const description = document.getElementById("description").value;
+
+      const status = document.getElementById("productStatus");
+
+      if (!name || !price) {
+        status.style.display = "block";
+        status.textContent = "Please enter at least a product name and price.";
+        return;
+      }
+
+      status.style.display = "block";
+      status.textContent =
+        "Product form is working. Database connection will be added next.";
+    }
+
+    function logout() {
+      document.getElementById("adminPanel").classList.add("hidden");
+      document.getElementById("loginCard").classList.remove("hidden");
+      document.getElementById("password").value = "";
+    }
+  </script>
+
+</body>
+</html>
